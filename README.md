@@ -20,4 +20,5 @@ brew "<formula>"
 ## 1. Sui-Prover
 
 To Install: `brew install asymptotic-code/sui-prover/sui-prover`
+
 To Use: `sui-move build --prove`
