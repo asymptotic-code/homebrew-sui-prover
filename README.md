@@ -1,5 +1,13 @@
 # Asymptotic-code Sui-prover
 
+
+## 1. Sui-Prover
+
+To Install: `brew install asymptotic-code/sui-prover/sui-prover`
+
+To Use: `sui-prover [Options]`
+
+
 ## How do I install these formulas?
 
 `brew install asymptotic-code/sui-prover/<formula>`
@@ -16,9 +24,3 @@ brew "<formula>"
 ## Documentation
 
 `brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
-
-## 1. Sui-Prover
-
-To Install: `brew install asymptotic-code/sui-prover/sui-prover`
-
-To Use: `sui-move build --prove`
