@@ -6,7 +6,7 @@ class SuiProver < Formula
   stable do
     depends_on "dotnet@8"
     url "https://github.com/asymptotic-code/sui.git", branch: "next"
-    version "0.1.0"
+    version "0.2.0"
     resource "boogie" do
       url "https://github.com/boogie-org/boogie.git", branch: "master"
     end
@@ -30,10 +30,9 @@ class SuiProver < Formula
   depends_on "z3"
 
   def install
-    system "cargo", "install", "--locked", "--path", "./crates/sui-move", "--features", "all"
-    # system "cargo", "build", "--release", "--features", "build", "--package", "sui-move"
+    system "cargo", "install", "--locked", "--path", "./crates/sui-prover"
 
-    libexec.install "target/release/sui-move"
+    libexec.install "target/release/sui-prover"
 
     ENV.prepend_path "PATH", Formula["dotnet@8"].opt_bin
     ENV["DOTNET_ROOT"] = Formula["dotnet@8"].opt_libexec
@@ -44,7 +43,7 @@ class SuiProver < Formula
       bin.install_symlink libexec/"BoogieDriver" => "boogie"
     end
 
-    (bin/"sui-move").write_env_script libexec/"sui-move", {
+    (bin/"sui-prover").write_env_script libexec/"sui-prover", {
       DOTNET_ROOT: Formula["dotnet@8"].opt_libexec,
       BOOGIE_EXE:  bin/"boogie",
       Z3_EXE:      Formula["z3"].opt_bin/"z3",
@@ -59,6 +58,6 @@ class SuiProver < Formula
 
   test do
     system "z3", "--version"
-    system "#{bin}/sui-move", "--version"
+    system "#{bin}/sui-prover", "--version"
   end
 end
