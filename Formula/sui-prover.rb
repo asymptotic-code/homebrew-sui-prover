@@ -5,8 +5,8 @@ class SuiProver < Formula
 
   stable do
     depends_on "dotnet@8"
-    url "https://github.com/asymptotic-code/sui.git", branch: "next"
-    version "0.2.32"
+    url "https://github.com/asymptotic-code/sui-prover.git", branch: "main"
+    version "0.3.1"
     resource "boogie" do
       url "https://github.com/boogie-org/boogie.git", branch: "master"
     end
@@ -19,7 +19,7 @@ class SuiProver < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "f2d13a41adf651996922860472001069ffb9a9beda030685941710f73d149362"
   end
 
-  head "https://github.com/asymptotic-code/sui.git", branch: "next" do
+  head "https://github.com/asymptotic-code/sui-prover.git", branch: "main" do
     depends_on "dotnet@8"
     resource "boogie" do
       url "https://github.com/boogie-org/boogie.git", branch: "master"
