@@ -36,11 +36,11 @@ class SuiProver < Formula
     # Build move-analyzer from the sui dependency
     # First, ensure all dependencies are fetched
     system "cargo", "fetch"
-    
+
     # Find the sui repository in Cargo's git checkouts
-    cargo_home = ENV["CARGO_HOME"] || "#{ENV["HOME"]}/.cargo"
+    cargo_home = ENV["CARGO_HOME"] || "#{Dir.home}/.cargo"
     sui_checkout_path = nil
-    
+
     # Look for sui repository in git checkouts
     Dir.glob("#{cargo_home}/git/checkouts/sui-*/*/").each do |path|
       if File.exist?("#{path}/crates/sui-move-lsp/Cargo.toml")
@@ -48,20 +48,20 @@ class SuiProver < Formula
         break
       end
     end
-    
+
     # Alternative: try to find it via cargo metadata after dependencies are resolved
     if sui_checkout_path.nil?
       begin
         require "json"
         # Use --offline to avoid network calls since deps should already be fetched
-        metadata = JSON.parse(`cargo metadata --format-version 1 --offline 2>/dev/null || cargo metadata --format-version 1`)
-        
+        cmd = "cargo metadata --format-version 1 --offline 2>/dev/null || cargo metadata --format-version 1"
+        metadata = JSON.parse(`#{cmd}`)
         # Look for any package from the sui repository
-        sui_packages = metadata["packages"].select { |pkg| 
-          pkg["source"] && pkg["source"].include?("github.com/asymptotic-code/sui")
-        }
-        
-        if !sui_packages.empty?
+        sui_packages = metadata["packages"].select do |pkg|
+          pkg["source"]&.include?("github.com/asymptotic-code/sui")
+        end
+
+        unless sui_packages.empty?
           # Get the checkout path from any sui package
           manifest_path = sui_packages.first["manifest_path"]
           # Navigate up to find the repository root
@@ -71,18 +71,18 @@ class SuiProver < Formula
           end
           sui_checkout_path = current_path if File.exist?("#{current_path}/crates/sui-move-lsp/Cargo.toml")
         end
-      rescue => e
+      rescue
         # Metadata approach failed, continue with manual search
       end
     end
-    
+
     if sui_checkout_path.nil?
       odie "Could not find sui repository checkout. Please ensure the sui dependencies in Cargo.toml are correct."
     end
-    
+
     # Build move-analyzer from the sui repository
     cd sui_checkout_path do
-      system "cargo", "build", "--release", "--bin", "move-analyzer", "-p", "sui-move-lsp"
+      system "cargo", "install", *std_cargo_args, "--bin", "move-analyzer", "-p", "sui-move-lsp"
       bin.install "target/release/move-analyzer"
     end
 
