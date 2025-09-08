@@ -13,10 +13,10 @@ class SuiProver < Formula
   end
 
   bottle do
-    root_url "https://github.com/asymptotic-code/homebrew-sui-prover/releases/download/sui-prover-0.3.35"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "902739c21a7c4cb05623169685ce42040119185f10ba413dbcc4fd4e6f9e91dd"
-    sha256 cellar: :any_skip_relocation, ventura:       "b0a88ac431daae7b5724bf2dcce021a063d2db9104ee0bacd2820d36b47ae818"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c05d019882daae7e3ad255b95c714b69f7ee8c9a813dccbc96da24b3e2c6372c"
+    root_url "https://github.com/asymptotic-code/homebrew-sui-prover/releases/download/sui-prover-0.3.36"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1df7327b3f138298ded93d9ffb301260dc6d779c64ee79c20f056bf93c901ca1"
+    sha256 cellar: :any_skip_relocation, ventura:       "6b380a4eec1048620285f481f5f1d9d0a55610f936adcf4d247765e97ea41cbc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2bc9b323228d8f306403110553fbdcfb73cf60461787789844983b8e1d225f33"
   end
 
   head "https://github.com/asymptotic-code/sui-prover.git", branch: "main" do
