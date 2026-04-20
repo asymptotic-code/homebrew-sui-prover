@@ -8,7 +8,7 @@ class SuiProver < Formula
     url "https://github.com/asymptotic-code/sui-prover.git", branch: "main"
     version "1.4.3"
     resource "boogie" do
-      url "https://github.com/boogie-org/boogie.git", branch: "master"
+      url "https://github.com/asymptotic-code/boogie.git", branch: "main", using: :git
     end
   end
 
@@ -20,7 +20,7 @@ class SuiProver < Formula
   head "https://github.com/asymptotic-code/sui-prover.git", branch: "main" do
     depends_on "dotnet@8"
     resource "boogie" do
-      url "https://github.com/boogie-org/boogie.git", branch: "master"
+      url "https://github.com/asymptotic-code/boogie.git", branch: "main", using: :git
     end
   end
 
