@@ -11,8 +11,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, macos-14, macos-15-intel, macos-15, macos-26]
+        os: [ubuntu-24.04, macos-14, macos-15, macos-26]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      GIT_TERMINAL_PROMPT: "0"
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
@@ -36,7 +39,10 @@ jobs:
         env:
           BOOGIE_REPO_TOKEN: ${{ secrets.BOOGIE_REPO_TOKEN }}
         run: |
-          git config --global url."https://x-access-token:${BOOGIE_REPO_TOKEN}@github.com/asymptotic-code/boogie.git".insteadOf "https://github.com/asymptotic-code/boogie.git"
+          auth=$(printf 'x-access-token:%s' "$BOOGIE_REPO_TOKEN" | base64 | tr -d '\n')
+          git config --global --unset-all credential.helper || true
+          git config --global credential.helper ""
+          git config --global http.https://github.com/asymptotic-code/boogie.git.extraheader "Authorization: Basic ${auth}"
 
       - run: brew test-bot --only-formulae
         if: github.event_name == 'pull_request'
