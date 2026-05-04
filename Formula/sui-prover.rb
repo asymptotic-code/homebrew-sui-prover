@@ -6,7 +6,7 @@ class SuiProver < Formula
   stable do
     depends_on "dotnet@8"
     url "https://github.com/asymptotic-code/sui-prover.git", branch: "main"
-    version "2.4.9"
+    version "2.8.1"
     resource "boogie" do
       url "https://github.com/asymptotic-code/boogie.git", branch: "master", using: :git
     end
@@ -27,6 +27,7 @@ class SuiProver < Formula
   end
 
   depends_on "rust" => :build
+  depends_on "openssl@3"
   depends_on "z3"
 
   def install
