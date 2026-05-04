@@ -6,7 +6,7 @@ class SuiProver < Formula
   stable do
     depends_on "dotnet@8"
     url "https://github.com/asymptotic-code/sui-prover.git", branch: "main"
-    version "2.8.1"
+    version "2.8.2"
     resource "boogie" do
       url "https://github.com/asymptotic-code/boogie.git", branch: "master", using: :git
     end
